@@ -9,7 +9,7 @@ import Card from "./components/Card";
 import "./App.css";
 
 //Firebase
-import base from './base';
+import base from "./base";
 
 class App extends Component {
 	state = {
@@ -18,20 +18,26 @@ class App extends Component {
 	};
 
 	// synchronisation à Firebase au moment où mon composant est chargé
-	
+
 	componentDidMount() {
 		this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
 			context: this,
 			state: "recettes"
-		})
-	};
+		});
+	}
 
 	// terminer synchronisation avant de changer de page pour ne pas écraser les informations qui ne nous appatiennent pas
 
-	componentWillMount() {
-		base.removeBinding(this.ref)
-	};
+	componentWillUMount() {
+		base.removeBinding(this.ref);
+	}
 
+	ajouterRecette = recette => {
+		const recettes = { ...this.state.recettes };
+		// donner un identifiant unique avec Date.now
+		recettes[`recette-${Date.now()}`] = recette;
+		this.setState({ recettes });
+	};
 
 	// Remplir state des recettes
 	chargerExemple = () => this.setState({ recettes });
@@ -45,7 +51,10 @@ class App extends Component {
 			<div className="box">
 				<Header pseudo={this.state.pseudo} />
 				<div className="cards">{cards}</div>
-				<Admin chargerExemple={this.chargerExemple} />
+				<Admin
+					ajouterRecette={this.ajouterRecette}
+					chargerExemple={this.chargerExemple}
+				/>
 			</div>
 		);
 	}
