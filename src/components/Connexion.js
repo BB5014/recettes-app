@@ -37,8 +37,8 @@ class Connexion extends Component {
           <p>Pas de caractères spéciaux.</p>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default Connexion
+export default Connexion;
