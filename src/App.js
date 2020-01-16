@@ -31,11 +31,23 @@ class App extends Component {
 	componentWillUMount() {
 		base.removeBinding(this.ref);
 	}
-
+	// Ajout d'un recette globale
 	ajouterRecette = recette => {
 		const recettes = { ...this.state.recettes };
 		// donner un identifiant unique avec Date.now
 		recettes[`recette-${Date.now()}`] = recette;
+		this.setState({ recettes });
+	};
+	// mise à jour recette point par point
+	majRecette = (key, newRecette) => {
+		const recettes = { ...this.state.recettes };
+		recettes[key] = newRecette;
+		this.setState({ recettes });
+	};
+
+	supprimerRecette = key => {
+		const recettes = { ...this.state.recettes };
+		recettes[key] = null;
 		this.setState({ recettes });
 	};
 
@@ -52,7 +64,10 @@ class App extends Component {
 				<Header pseudo={this.state.pseudo} />
 				<div className="cards">{cards}</div>
 				<Admin
+					recettes={this.state.recettes}
 					ajouterRecette={this.ajouterRecette}
+					majRecette={this.majRecette}
+					supprimerRecette={this.supprimerRecette}
 					chargerExemple={this.chargerExemple}
 				/>
 			</div>
