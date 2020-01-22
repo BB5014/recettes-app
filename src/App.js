@@ -5,6 +5,7 @@ import Admin from "./components/Admin";
 import Card from "./components/Card";
 
 import withFirebase from "./hoc/withFirebase";
+import ColorContext from "./components/Color";
 
 // CSS
 import "./App.css";
@@ -20,20 +21,23 @@ const App = ({
 	const cards = Object.keys(recettes).map(key => (
 		<Card key={key} details={recettes[key]} />
 	));
-	console.log(cards);
+
 	return (
-		<div className="box">
-			<Header pseudo={match.params.pseudo} />
-			<div className="cards">{cards}</div>
-			<Admin
-				pseudo={match.params.pseudo}
-				recettes={recettes}
-				ajouterRecette={ajouterRecette}
-				majRecette={majRecette}
-				supprimerRecette={supprimerRecette}
-				chargerExemple={chargerExemple}
-			/>
-		</div>
+		// Englober mon App : pour dire que context est disponible
+		<ColorContext>
+			<div className="box">
+				<Header pseudo={match.params.pseudo} />
+				<div className="cards">{cards}</div>
+				<Admin
+					pseudo={match.params.pseudo}
+					recettes={recettes}
+					ajouterRecette={ajouterRecette}
+					majRecette={majRecette}
+					supprimerRecette={supprimerRecette}
+					chargerExemple={chargerExemple}
+				/>
+			</div>
+		</ColorContext>
 	);
 };
 
@@ -44,7 +48,7 @@ App.propTypes = {
 	majRecette: PropTypes.func.isRequired,
 	supprimerRecette: PropTypes.func.isRequired,
 	chargerExemple: PropTypes.func.isRequired
-}
+};
 
 const WrappedComponent = withFirebase(App);
 
