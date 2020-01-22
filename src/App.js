@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import Header from "./components/Header";
 import Admin from "./components/Admin";
 import Card from "./components/Card";
@@ -36,6 +36,15 @@ const App = ({
 		</div>
 	);
 };
+
+App.propTypes = {
+	match: PropTypes.object.isRequired,
+	recettes: PropTypes.object.isRequired,
+	ajouterRecette: PropTypes.func.isRequired,
+	majRecette: PropTypes.func.isRequired,
+	supprimerRecette: PropTypes.func.isRequired,
+	chargerExemple: PropTypes.func.isRequired
+}
 
 const WrappedComponent = withFirebase(App);
 
