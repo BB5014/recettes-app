@@ -1,6 +1,8 @@
 import React, { Component} from 'react'
 import { Redirect } from 'react-router-dom'
 
+import withPalceholder from "../hoc/withPlaceholder"
+
 class Connexion extends Component {
   state = {
     pseudo: '',
@@ -30,7 +32,7 @@ class Connexion extends Component {
             type='text'
             value={this.state.pseudo}
             onChange={this.handleChange}
-            placeholder='Nom du Chef'
+            placeholder={this.props.placeholder}
             pattern='[A-Za-z-]{1,}'
             required />
           <button type='submit'>GO</button>
@@ -41,4 +43,8 @@ class Connexion extends Component {
   }
 }
 
-export default Connexion;
+
+// Utilisation du HOC
+const WrappedComponent = withPalceholder(Connexion);
+
+export default WrappedComponent;
